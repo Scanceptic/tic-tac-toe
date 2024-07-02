@@ -14,7 +14,20 @@ Tic-tac-toe
     pushing all those functions to the outside but preventing any further access to the outer function
     OR you can make loads of functions inside a function, and then return all those functions at the end,
     meaning all those functions are available on the outside but you can also access the outer function
- */
+*/
+/* 
+Everything publically exposed on the object can be changed from the outside
+e.g.
+const Format = (function() {
+    let timesRun = 0;
+
+    return {
+        timesRun
+    }
+})();
+Format.timesRun = 10;
+would work
+*/
 // Define Gameboard as object
 const Gameboard = (() => {
 	// declared using let to allow easier changing of values
@@ -88,7 +101,7 @@ const Game = () => {
 				}
 			}
 		};
-        const result = checkWin();
+		const result = checkWin();
 		if (result === 1) {
 			console.log("Noughts Win");
 		} else if (result === 2) {

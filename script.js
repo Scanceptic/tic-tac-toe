@@ -75,7 +75,7 @@ const checkState = function () {
 		console.log("Noughts Win");
 	} else if (checkWin() === 2) {
 		console.log("Crosses Win");
-	} else if (!board.find("")) {
+	} else if (!board.includes("")) {
 		// If board is full
 		console.log("Board is full");
 	} else {

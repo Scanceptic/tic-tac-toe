@@ -33,7 +33,44 @@ const Gameboard = {
 const checkState = function () {
 	// win checker function
     const checkWin = function () {
-        return 1;
+        // test functions
+        const isNought = (val) => val === "O"; 
+        const isCross = (val) => val === "X";
+        // check rows ([0,1,2],[3,4,5],[6,7,8])
+        const rows = [Gameboard.board.slice(0,3),Gameboard.board.slice(3,6),Gameboard.board.slice(6,9)];
+        for (let i=0; i < rows.length; i++) {
+            if (rows[i].every(isNought)) {
+                return 1;
+            } else if (rows[i].every(isCross)) {
+                return 2;
+            }
+        }
+        // check columns ([0,3,6],[1,4,7],[2,5,8])
+        for (let i=0; i <= 8; i++) {
+            if(Gameboard.board[i] === "O") {
+                noughtCount++;
+            } else if (Gameboard.board[i] === "X") {
+                crossCount++;
+            }
+            if (noughtCount >= 3) {
+                return 1;
+            } else if (crossCount >= 3) {
+                return 2;
+            }
+        }
+        // check diagonals ([0,4,8],[2,4,6])
+        for (let i=0; i <= 8; i++) {
+            if(Gameboard.board[i] === "O") {
+                noughtCount++;
+            } else if (Gameboard.board[i] === "X") {
+                crossCount++;
+            }
+            if (noughtCount >= 3) {
+                return 1;
+            } else if (crossCount >= 3) {
+                return 2;
+            }
+        }
     }
 	if (checkWin() === 1) {
 		console.log("Noughts Win");
@@ -42,7 +79,9 @@ const checkState = function () {
 	} else if (!Gameboard.board.find("")) {
 		// If board is full
 		console.log("Board is full");
-	}
+	} else {
+        console.log("Game in progress...");
+    }
 };
 
 /*

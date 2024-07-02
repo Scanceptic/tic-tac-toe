@@ -22,7 +22,7 @@ const Gameboard = (() => {
     const setGameboard = (row, col, player) => {
         gameboard[row][col] = player;
     }
-})
+})();
 
 // win/tie checker
 const checkState = function () {

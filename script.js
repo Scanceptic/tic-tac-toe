@@ -33,6 +33,11 @@ const Gameboard = {
 const checkState = function () {
 	// win checker function
     const checkWin = function () {
+        /* 
+            The winchecker slices each possible 3-long group of cells out of the board
+            It then checks to see if every cell is either a nought or a cross
+            If all cells are noughts - 3 in a row, noughts win - and vice versa
+        */
         // test functions
         const isNought = (val) => val === "O"; 
         const isCross = (val) => val === "X";

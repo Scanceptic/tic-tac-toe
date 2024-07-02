@@ -10,24 +10,19 @@ Tic-tac-toe
  b. Looks for ties
 */
 // Define as object
-const Gameboard = {
-	// tic-tac-toe board with 3x3 grid
-	board: ["", "", "", "", "", "", "", "", ""],
-	// Player move
-	playerMove: function (pos, player) {
-		if (!Gameboard.board[pos]) {
-			if (player === 1) {
-				// if player1 move, add nought to cell
-				Gameboard.board.splice(pos, 1, "O");
-			} else if (player === 2) {
-				// if player2 move, add cross to cell
-				Gameboard.board.splice(pos, 1, "X");
-			}
-		} else {
-			return "Invalid Move - Cell occupied";
-		}
-	},
-};
+const Gameboard = (() => {
+    // declared using let to allow easier changing of values
+    let gameboard = [["","",""],["","",""],["","",""]];
+    const getGameboard = () => {
+        return gameboard;
+    }
+    const resetGameboard = () => {
+        gameboard = [["","",""],["","",""],["","",""]];
+    }
+    const setGameboard = (row, col, player) => {
+        gameboard[row][col] = player;
+    }
+})
 
 // win/tie checker
 const checkState = function () {

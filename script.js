@@ -9,6 +9,12 @@ Tic-tac-toe
  a. Looks for 3-in-a-rows
  b. Looks for ties
 */
+/* 
+    You can either make loads of functions inside a function and call it once immediately,
+    pushing all those functions to the outside but preventing any further access to the outer function
+    OR you can make loads of functions inside a function, and then return all those functions at the end,
+    meaning all those functions are available on the outside but you can also access the outer function
+ */
 // Define Gameboard as object
 const Gameboard = (() => {
 	// declared using let to allow easier changing of values

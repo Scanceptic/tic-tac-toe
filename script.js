@@ -31,6 +31,8 @@ const Gameboard = {
 
 // win/tie checker
 const checkState = function () {
+    // easy board reference
+    const board = Gameboard.board;
 	// win checker function
     const checkWin = function () {
         /* 
@@ -42,7 +44,7 @@ const checkState = function () {
         const isNought = (val) => val === "O"; 
         const isCross = (val) => val === "X";
         // check rows ([0,1,2],[3,4,5],[6,7,8])
-        const rows = [Gameboard.board.slice(0,3),Gameboard.board.slice(3,6),Gameboard.board.slice(6,9)];
+        const rows = [board.slice(0,3),board.slice(3,6),board.slice(6,9)];
         for (let i=0; i < rows.length; i++) {
             if (rows[i].every(isNought)) {
                 return 1;
@@ -51,28 +53,20 @@ const checkState = function () {
             }
         }
         // check columns ([0,3,6],[1,4,7],[2,5,8])
-        for (let i=0; i <= 8; i++) {
-            if(Gameboard.board[i] === "O") {
-                noughtCount++;
-            } else if (Gameboard.board[i] === "X") {
-                crossCount++;
-            }
-            if (noughtCount >= 3) {
+        const columns = [[board[0],board[3],board[6]],[board[1],board[4],board[7]],[board[2],board[5],board[8]]];
+        for (let i=0; i < columns.length; i++) {
+            if (columns[i].every(isNought)) {
                 return 1;
-            } else if (crossCount >= 3) {
+            } else if (columns[i].every(isCross)) {
                 return 2;
             }
         }
         // check diagonals ([0,4,8],[2,4,6])
-        for (let i=0; i <= 8; i++) {
-            if(Gameboard.board[i] === "O") {
-                noughtCount++;
-            } else if (Gameboard.board[i] === "X") {
-                crossCount++;
-            }
-            if (noughtCount >= 3) {
+        const diagonals = [[board[0],board[4],board[8]],[board[2],board[4],board[6]]];
+        for (let i=0; i < diagonals.length; i++) {
+            if (diagonals[i].every(isNought)) {
                 return 1;
-            } else if (crossCount >= 3) {
+            } else if (diagonals[i].every(isCross)) {
                 return 2;
             }
         }
@@ -81,7 +75,7 @@ const checkState = function () {
 		console.log("Noughts Win");
 	} else if (checkWin() === 2) {
 		console.log("Crosses Win");
-	} else if (!Gameboard.board.find("")) {
+	} else if (!board.find("")) {
 		// If board is full
 		console.log("Board is full");
 	} else {

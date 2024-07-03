@@ -1,37 +1,3 @@
-/* 
-Tic-tac-toe
-1. Store gameboard as an array inside of a Gameboard object
-2. Store players in objects
-3. Create object that controls the flow of the game
-4. No/minimal global code - put everything inside factories
-5. Use IIFE (module pattern) for gameboard, displayController
-6. Logic that checks if game is over
- a. Looks for 3-in-a-rows
- b. Looks for ties
-*/
-/* 
-    You can either make loads of functions inside a function and call it once immediately,
-    pushing all those functions to the outside but preventing any further access to the outer function
-    OR you can make loads of functions inside a function, and then return all those functions at the end,
-    meaning all those functions are available on the outside but you can also access the outer function
-*/
-/* 
-Everything publically exposed on the object can be changed from the outside
-e.g.
-const Format = (function() {
-    let timesRun = 0;
-
-    return {
-        timesRun
-    }
-})();
-Format.timesRun = 10;
-would work
-*/
-/* 
-	The factory functions basically keep a bunch of variables hidden inside (such as gameboard - cannot be directly changed)
-	These variables can only be changed using functions that are returned - allowing them to be globally
-*/
 // Define Gameboard as object
 const Gameboard = (() => {
 	// declared using let to allow easier changing of values

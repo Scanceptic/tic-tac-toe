@@ -41,7 +41,7 @@ const Gameboard = (() => {
 	};
 	const resetGameboard = () => {
 		gameboard = ["", "", "", "", "", "", "", "", ""];
-		Player.playerTurn = 1;
+		playerTurn = 1;
 		displayController.renderGame();
 		console.log("Board Reset!");
 	};
@@ -132,13 +132,13 @@ const Game = (() => {
 
 // Define player as object
 // contains player info, turn order logic
+let playerTurn = 1;
 const Player = (() => {
 	let player1 = "O";
 	let player2 = "X";
-	let playerTurn = 1;
-
 	const playerMove = (index) => {
 		if (Gameboard.getGameboard()[index] === "") {
+			console.log(playerTurn);
 			if (playerTurn === 1) {
 				Gameboard.setGameboard(index, player1);
 				console.log(`Player ${playerTurn} played index ${index}`);
@@ -165,7 +165,7 @@ const Player = (() => {
 		displayController.renderGame();
 	};
 
-	return { playerMove };
+	return { playerMove, playerTurn };
 })();
 
 const displayController = (() => {
@@ -192,14 +192,18 @@ const startGame = () => {
 	}
 };
 
+let playerOneName = "";
+let playerTwoName = "";
+
 const startBtn = document.querySelector("#start-game");
 startBtn.addEventListener("click", () => {
 	const playerOneInput = document.querySelector("#player1name");
 	const playerTwoInput = document.querySelector("#player2name");
-	let playerOneName = playerOneInput.value.toString();
-	let playerTwoName = playerTwoInput.value.toString();
+	playerOneName = playerOneInput.value.toString();
+	playerTwoName = playerTwoInput.value.toString();
 	startGame();
-	return { playerOneName, playerTwoName };
+	console.log({ playerOneName, playerTwoName });
+	startBtn.disabled = true;
 });
 
 const resetBtn = document.querySelector("#reset-game");

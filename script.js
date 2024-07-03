@@ -50,7 +50,7 @@ const Gameboard = (() => {
 			["", "", ""],
 		];
 		Player.playerTurn = 1;
-		console.log("Board Reset!")
+		console.log("Board Reset!");
 	};
 	const setGameboard = (row, col, player) => {
 		gameboard[row][col] = player;
@@ -64,6 +64,7 @@ const Gameboard = (() => {
 const Game = (() => {
 	const checkState = () => {
 		const board = Gameboard.getGameboard();
+		const isNoughtOrCross = (val) => val === "O" || val === "X";
 		// win checker function
 		const checkWin = function () {
 			/* 
@@ -75,9 +76,11 @@ const Game = (() => {
 			const isNought = (val) => val === "O";
 			const isCross = (val) => val === "X";
 			// check rows ([0,1,2],[3,4,5],[6,7,8])
-			const rows = [board.slice(0, 3), board.slice(3, 6), board.slice(6, 9)];
+			const rows = [board[0], board[1], board[2]];
 			for (let i = 0; i < rows.length; i++) {
+				console.log("Rows check");
 				if (rows[i].every(isNought)) {
+					console.log(rows[i]);
 					return 1;
 				} else if (rows[i].every(isCross)) {
 					return 2;
@@ -90,6 +93,7 @@ const Game = (() => {
 				[board[2], board[5], board[8]],
 			];
 			for (let i = 0; i < columns.length; i++) {
+				console.log("Columns check");
 				if (columns[i].every(isNought)) {
 					return 1;
 				} else if (columns[i].every(isCross)) {
@@ -102,6 +106,7 @@ const Game = (() => {
 				[board[2], board[4], board[6]],
 			];
 			for (let i = 0; i < diagonals.length; i++) {
+				console.log("Diagonals check");
 				if (diagonals[i].every(isNought)) {
 					return 1;
 				} else if (diagonals[i].every(isCross)) {
@@ -116,7 +121,7 @@ const Game = (() => {
 		} else if (result === 2) {
 			console.log("Crosses Win");
 			return true;
-		} else if (!board.includes("")) {
+		} else if (board.every(isNoughtOrCross) === true) {
 			// If board is full
 			console.log("Board is full - Draw");
 			return true;
@@ -153,11 +158,13 @@ const Player = (() => {
 				playerTurn = 1;
 				console.log(`Player ${playerTurn}'s turn`);
 			} else if (playerTurn === 0) {
-				console.log ("No Moves Possible, Game is Over! Reset Board to Start Again");
+				console.log(
+					"No Moves Possible, Game is Over! Reset Board to Start Again"
+				);
 			}
 			if (Game.checkState()) {
 				playerTurn = 0;
-			};
+			}
 		} else {
 			console.log("Cell is occupied - Invalid Move");
 		}

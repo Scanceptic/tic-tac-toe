@@ -34,8 +34,11 @@ body {
 
 #result {
     display: none;
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    color: #00AA00;
+    border: 1px solid black;
 }
 
 #tic-tac-toe-board {

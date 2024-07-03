@@ -35,25 +35,18 @@ would work
 // Define Gameboard as object
 const Gameboard = (() => {
 	// declared using let to allow easier changing of values
-	let gameboard = [
-		["", "", ""],
-		["", "", ""],
-		["", "", ""],
-	];
+	let gameboard = ["", "", "", "", "", "", "", "", ""];
 	const getGameboard = () => {
 		return gameboard;
 	};
 	const resetGameboard = () => {
-		gameboard = [
-			["", "", ""],
-			["", "", ""],
-			["", "", ""],
-		];
+		gameboard = ["", "", "", "", "", "", "", "", ""];
 		Player.playerTurn = 1;
+		displayController.renderGame();
 		console.log("Board Reset!");
 	};
 	const setGameboard = (row, col, player) => {
-		gameboard[row][col] = player;
+		gameboard[(row + 1) * col] = player;
 	};
 
 	return { getGameboard, resetGameboard, setGameboard };
@@ -76,11 +69,10 @@ const Game = (() => {
 			const isNought = (val) => val === "O";
 			const isCross = (val) => val === "X";
 			// check rows ([0,1,2],[3,4,5],[6,7,8])
-			const rows = [board[0], board[1], board[2]];
+			const rows = [[board[0],board[1],board[2]],[board[3],board[4],board[5]],[board[6],board[7],board[8]]];
 			for (let i = 0; i < rows.length; i++) {
-				console.log("Rows check");
+				//console.log("Rows check");
 				if (rows[i].every(isNought)) {
-					console.log(rows[i]);
 					return 1;
 				} else if (rows[i].every(isCross)) {
 					return 2;
@@ -93,7 +85,7 @@ const Game = (() => {
 				[board[2], board[5], board[8]],
 			];
 			for (let i = 0; i < columns.length; i++) {
-				console.log("Columns check");
+				//console.log("Columns check");
 				if (columns[i].every(isNought)) {
 					return 1;
 				} else if (columns[i].every(isCross)) {
@@ -106,7 +98,7 @@ const Game = (() => {
 				[board[2], board[4], board[6]],
 			];
 			for (let i = 0; i < diagonals.length; i++) {
-				console.log("Diagonals check");
+				//console.log("Diagonals check");
 				if (diagonals[i].every(isNought)) {
 					return 1;
 				} else if (diagonals[i].every(isCross)) {
@@ -162,12 +154,15 @@ const Player = (() => {
 					"No Moves Possible, Game is Over! Reset Board to Start Again"
 				);
 			}
-			if (Game.checkState()) {
-				playerTurn = 0;
+			if (playerTurn !== 0) {
+				if (Game.checkState()) {
+					playerTurn = 0;
+				}
 			}
 		} else {
 			console.log("Cell is occupied - Invalid Move");
 		}
+		displayController.renderGame();
 	};
 
 	return { playerMove };
@@ -189,3 +184,20 @@ const displayController = (() => {
 
 	return { renderGame };
 })();
+
+const startGame = () => {
+	const board = Gameboard.getGameboard();
+	// loop through rows
+	for (let i = 0; i < 3; i++) {
+		const row = document.querySelector(`#row${i}`);
+		// loop through cols
+		for (let j = 0; j < 3; j++) {
+			const cells = row.querySelectorAll(".cell");
+			cells[j].addEventListener("click", () => {
+				Player.playerMove(i, j);
+			});
+		}
+	}
+};
+
+startGame;

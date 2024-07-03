@@ -45,8 +45,8 @@ const Gameboard = (() => {
 		displayController.renderGame();
 		console.log("Board Reset!");
 	};
-	const setGameboard = (row, col, player) => {
-		gameboard[(row + 1) * col] = player;
+	const setGameboard = (index, player) => {
+		gameboard[index] = player;
 	};
 
 	return { getGameboard, resetGameboard, setGameboard };
@@ -69,7 +69,11 @@ const Game = (() => {
 			const isNought = (val) => val === "O";
 			const isCross = (val) => val === "X";
 			// check rows ([0,1,2],[3,4,5],[6,7,8])
-			const rows = [[board[0],board[1],board[2]],[board[3],board[4],board[5]],[board[6],board[7],board[8]]];
+			const rows = [
+				[board[0], board[1], board[2]],
+				[board[3], board[4], board[5]],
+				[board[6], board[7], board[8]],
+			];
 			for (let i = 0; i < rows.length; i++) {
 				//console.log("Rows check");
 				if (rows[i].every(isNought)) {
@@ -133,20 +137,16 @@ const Player = (() => {
 	let player2 = "X";
 	let playerTurn = 1;
 
-	const playerMove = (row, col) => {
-		if (Gameboard.getGameboard()[row][col] === "") {
+	const playerMove = (index) => {
+		if (Gameboard.getGameboard()[index] === "") {
 			if (playerTurn === 1) {
-				Gameboard.setGameboard(row, col, player1);
-				console.log(
-					`Player ${playerTurn} played row ${row + 1}, column ${col + 1}`
-				);
+				Gameboard.setGameboard(index, player1);
+				console.log(`Player ${playerTurn} played index ${index}`);
 				playerTurn = 2;
 				console.log(`Player ${playerTurn}'s turn`);
 			} else if (playerTurn === 2) {
-				Gameboard.setGameboard(row, col, player2);
-				console.log(
-					`Player ${playerTurn} played row ${row + 1}, column ${col + 1}`
-				);
+				Gameboard.setGameboard(index, player2);
+				console.log(`Player ${playerTurn} played index ${index}`);
 				playerTurn = 1;
 				console.log(`Player ${playerTurn}'s turn`);
 			} else if (playerTurn === 0) {
@@ -171,14 +171,10 @@ const Player = (() => {
 const displayController = (() => {
 	const renderGame = () => {
 		const board = Gameboard.getGameboard();
-		// loop through rows
-		for (let i = 0; i < 3; i++) {
-			const row = document.querySelector(`#row${i}`);
-			// loop through cols
-			for (let j = 0; j < 3; j++) {
-				const cells = row.querySelectorAll(".cell");
-				cells[j].textContent = board[i][j];
-			}
+		const cells = document.querySelectorAll(".cell");
+		// loop through grid
+		for (let i = 0; i < 9; i++) {
+			cells[i].textContent = board[i];
 		}
 	};
 
@@ -186,18 +182,14 @@ const displayController = (() => {
 })();
 
 const startGame = () => {
-	const board = Gameboard.getGameboard();
-	// loop through rows
-	for (let i = 0; i < 3; i++) {
-		const row = document.querySelector(`#row${i}`);
-		// loop through cols
-		for (let j = 0; j < 3; j++) {
-			const cells = row.querySelectorAll(".cell");
-			cells[j].addEventListener("click", () => {
-				Player.playerMove(i, j);
-			});
-		}
+	console.log("Game Started");
+	const cells = document.querySelectorAll(".cell");
+	// loop through grid
+	for (let i = 0; i < 9; i++) {
+		cells[i].addEventListener("click", () => {
+			Player.playerMove(i);
+		});
 	}
 };
 
-startGame;
+startGame();

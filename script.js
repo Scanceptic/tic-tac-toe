@@ -172,3 +172,11 @@ const Player = (() => {
 
 	return { playerMove };
 })();
+
+const displayController = (() => {
+	
+	
+	const renderGame = () => {
+
+	}
+})

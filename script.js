@@ -28,6 +28,10 @@ const Format = (function() {
 Format.timesRun = 10;
 would work
 */
+/* 
+	The factory functions basically keep a bunch of variables hidden inside (such as gameboard - cannot be directly changed)
+	These variables can only be changed using functions that are returned - allowing them to be globally
+*/
 // Define Gameboard as object
 const Gameboard = (() => {
 	// declared using let to allow easier changing of values
@@ -49,11 +53,13 @@ const Gameboard = (() => {
 	const setGameboard = (row, col, player) => {
 		gameboard[row][col] = player;
 	};
+
+	return {getGameboard, resetGameboard, setGameboard};
 })();
 
 // Define game as object
 // Contains gamewin/tie logic
-const Game = () => {
+const Game = (() => {
 	const checkState = () => {
 		const board = Gameboard.getGameboard();
 		// win checker function
@@ -113,10 +119,30 @@ const Game = () => {
 			console.log("Game in progress...");
 		}
 	};
-};
+	
+	return {checkState};
+})();
 
 // Define player as object
 // contains player info, turn order logic
-const Player = () => {
-	const playerMove = () => {};
-};
+const Player = (() => {
+	let player1 = "O";
+	let player2 = "X";
+	let playerTurn = 1;
+
+
+	const playerMove = (row, col) => {
+		if (getGameboard[row][col] === "") {
+			if (playerTurn === 1) {
+				setGameboard(row, col, player1);
+				playerTurn = 2;
+			} else if (playerTurn === 2) {
+				setGameboard(row, col, player2);
+				playerTurn = 1;
+			}
+			
+		}
+	};
+
+	return {playerMove};
+})();

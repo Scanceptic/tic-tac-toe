@@ -1,3 +1,5 @@
+const result = document.querySelector("#result");
+const winText = document.querySelector("#result > h2");
 // Define Gameboard as object
 const Gameboard = (() => {
 	// declared using let to allow easier changing of values
@@ -8,6 +10,7 @@ const Gameboard = (() => {
 	const resetGameboard = () => {
 		gameboard = ["", "", "", "", "", "", "", "", ""];
 		playerTurn = 1;
+		result.style.display = "none";
 		displayController.renderGame();
 		console.log("Board Reset!");
 	};
@@ -78,13 +81,19 @@ const Game = (() => {
 		};
 		const result = checkWin();
 		if (result === 1) {
+			result.style.display = "block";
+			winText.textContent = `Victory for ${playerOneName}`;
 			console.log(`Victory for ${playerOneName}`);
 			return true;
 		} else if (result === 2) {
+			result.style.display = "block";
+			winText.textContent = `Victory for ${playerTwoName}`;
 			console.log(`Victory for ${playerTwoName}`);
 			return true;
 		} else if (board.every(isNoughtOrCross) === true) {
 			// If board is full
+			result.style.display = "block";
+			winText.textContent = `Board is full - Draw`;
 			console.log("Board is full - Draw");
 			return true;
 		} else {

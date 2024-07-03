@@ -7,5 +7,45 @@
 		<link rel="stylesheet" href="style.css" />
 		<script src="script.js" defer></script>
 	</head>
-	<body></body>
+	<body>
+		<div id="header">
+			<h1>Tic-Tac-Toe</h1>
+		</div>
+		<div id="buttons">
+			<div id="names" class="row">
+				<label for="player1name">Player 1:</label>
+				<input
+					id="player1name"
+					name="player1name"
+					placeholder="Steve..."
+					value="Noughts"
+				/>
+				<label for="player2name">Player 2:</label>
+				<input
+					id="player2name"
+					name="player2name"
+					placeholder="Tim..."
+					value="Crosses"
+				/>
+			</div>
+			<div id="game-buttons" class="row">
+				<button id="start-game">Start Game</button>
+				<button id="reset-game">Reset Board</button>
+			</div>
+		</div>
+		<div id="result">
+			<h2></h2>
+		</div>
+		<div id="tic-tac-toe-board">
+			<div class="cell"></div>
+			<div class="cell"></div>
+			<div class="cell"></div>
+			<div class="cell"></div>
+			<div class="cell"></div>
+			<div class="cell"></div>
+			<div class="cell"></div>
+			<div class="cell"></div>
+			<div class="cell"></div>
+		</div>
+	</body>
 </html>

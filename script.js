@@ -49,12 +49,14 @@ const Gameboard = (() => {
 			["", "", ""],
 			["", "", ""],
 		];
+		Player.playerTurn = 1;
+		console.log("Board Reset!")
 	};
 	const setGameboard = (row, col, player) => {
 		gameboard[row][col] = player;
 	};
 
-	return {getGameboard, resetGameboard, setGameboard};
+	return { getGameboard, resetGameboard, setGameboard };
 })();
 
 // Define game as object
@@ -110,17 +112,21 @@ const Game = (() => {
 		const result = checkWin();
 		if (result === 1) {
 			console.log("Noughts Win");
+			return true;
 		} else if (result === 2) {
 			console.log("Crosses Win");
+			return true;
 		} else if (!board.includes("")) {
 			// If board is full
 			console.log("Board is full - Draw");
+			return true;
 		} else {
 			console.log("Game in progress...");
+			return false;
 		}
 	};
-	
-	return {checkState};
+
+	return { checkState };
 })();
 
 // Define player as object
@@ -130,19 +136,32 @@ const Player = (() => {
 	let player2 = "X";
 	let playerTurn = 1;
 
-
 	const playerMove = (row, col) => {
-		if (getGameboard[row][col] === "") {
+		if (Gameboard.getGameboard()[row][col] === "") {
 			if (playerTurn === 1) {
-				setGameboard(row, col, player1);
+				Gameboard.setGameboard(row, col, player1);
+				console.log(
+					`Player ${playerTurn} played row ${row + 1}, column ${col + 1}`
+				);
 				playerTurn = 2;
+				console.log(`Player ${playerTurn}'s turn`);
 			} else if (playerTurn === 2) {
-				setGameboard(row, col, player2);
+				Gameboard.setGameboard(row, col, player2);
+				console.log(
+					`Player ${playerTurn} played row ${row + 1}, column ${col + 1}`
+				);
 				playerTurn = 1;
+				console.log(`Player ${playerTurn}'s turn`);
+			} else if (playerTurn === 0) {
+				console.log ("No Moves Possible, Game is Over! Reset Board to Start Again");
 			}
-			
+			if (Game.checkState()) {
+				playerTurn = 0;
+			};
+		} else {
+			console.log("Cell is occupied - Invalid Move");
 		}
 	};
 
-	return {playerMove};
+	return { playerMove };
 })();

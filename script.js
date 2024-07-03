@@ -174,9 +174,18 @@ const Player = (() => {
 })();
 
 const displayController = (() => {
-	
-	
 	const renderGame = () => {
+		const board = Gameboard.getGameboard();
+		// loop through rows
+		for (let i = 0; i < 3; i++) {
+			const row = document.querySelector(`#row${i}`);
+			// loop through cols
+			for (let j = 0; j < 3; j++) {
+				const cells = row.querySelectorAll(".cell");
+				cells[j].textContent = board[i][j];
+			}
+		}
+	};
 
-	}
-})
+	return { renderGame };
+})();

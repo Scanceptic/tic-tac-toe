@@ -12,7 +12,7 @@ const Gameboard = (() => {
 		playerTurn = 1;
 		resultDisplay.style.display = "none";
 		displayController.renderGame();
-		console.log("Board Reset!");
+		//console.log("Board Reset!");
 	};
 	const setGameboard = (index, player) => {
 		gameboard[index] = player;
@@ -83,21 +83,21 @@ const Game = (() => {
 		if (result === 1) {
 			resultDisplay.style.display = "block";
 			winText.textContent = `Victory for ${playerOneName}`;
-			console.log(`Victory for ${playerOneName}`);
+			//console.log(`Victory for ${playerOneName}`);
 			return true;
 		} else if (result === 2) {
 			resultDisplay.style.display = "block";
 			winText.textContent = `Victory for ${playerTwoName}`;
-			console.log(`Victory for ${playerTwoName}`);
+			//console.log(`Victory for ${playerTwoName}`);
 			return true;
 		} else if (board.every(isNoughtOrCross) === true) {
 			// If board is full
 			resultDisplay.style.display = "block";
 			winText.textContent = `Board is full - Draw`;
-			console.log("Board is full - Draw");
+			//console.log("Board is full - Draw");
 			return true;
 		} else {
-			console.log("Game in progress...");
+			//console.log("Game in progress...");
 			return false;
 		}
 	};
@@ -113,21 +113,19 @@ const Player = (() => {
 	let player2 = "X";
 	const playerMove = (index) => {
 		if (Gameboard.getGameboard()[index] === "") {
-			console.log(playerTurn);
+			//console.log(playerTurn);
 			if (playerTurn === 1) {
 				Gameboard.setGameboard(index, player1);
-				console.log(`Player ${playerTurn} played index ${index}`);
+				//console.log(`Player ${playerTurn} played index ${index}`);
 				playerTurn = 2;
-				console.log(`Player ${playerTurn}'s turn`);
+				//console.log(`Player ${playerTurn}'s turn`);
 			} else if (playerTurn === 2) {
 				Gameboard.setGameboard(index, player2);
-				console.log(`Player ${playerTurn} played index ${index}`);
+				//console.log(`Player ${playerTurn} played index ${index}`);
 				playerTurn = 1;
-				console.log(`Player ${playerTurn}'s turn`);
+				//console.log(`Player ${playerTurn}'s turn`);
 			} else if (playerTurn === 0) {
-				console.log(
-					"No Moves Possible, Game is Over! Reset Board to Start Again"
-				);
+				//console.log("No Moves Possible, Game is Over! Reset Board to Start Again");
 			}
 			if (playerTurn !== 0) {
 				if (Game.checkState()) {
@@ -135,7 +133,7 @@ const Player = (() => {
 				}
 			}
 		} else {
-			console.log("Cell is occupied - Invalid Move");
+			//console.log("Cell is occupied - Invalid Move");
 		}
 		displayController.renderGame();
 	};
@@ -157,7 +155,7 @@ const displayController = (() => {
 })();
 
 const startGame = () => {
-	console.log("Game Started");
+	//console.log("Game Started");
 	const cells = document.querySelectorAll(".cell");
 	// loop through grid
 	for (let i = 0; i < 9; i++) {
@@ -177,7 +175,7 @@ startBtn.addEventListener("click", () => {
 	playerOneName = playerOneInput.value.toString();
 	playerTwoName = playerTwoInput.value.toString();
 	startGame();
-	console.log({ playerOneName, playerTwoName });
+	//console.log({ playerOneName, playerTwoName });
 	startBtn.disabled = true;
 });
 

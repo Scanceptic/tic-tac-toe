@@ -112,10 +112,10 @@ const Game = (() => {
 		};
 		const result = checkWin();
 		if (result === 1) {
-			console.log("Noughts Win");
+			console.log(`Victory for ${playerOneName}`);
 			return true;
 		} else if (result === 2) {
-			console.log("Crosses Win");
+			console.log(`Victory for ${playerTwoName}`);
 			return true;
 		} else if (board.every(isNoughtOrCross) === true) {
 			// If board is full
@@ -192,4 +192,17 @@ const startGame = () => {
 	}
 };
 
-startGame();
+const startBtn = document.querySelector("#start-game");
+startBtn.addEventListener("click", () => {
+	const playerOneInput = document.querySelector("#player1name");
+	const playerTwoInput = document.querySelector("#player2name");
+	let playerOneName = playerOneInput.value.toString();
+	let playerTwoName = playerTwoInput.value.toString();
+	startGame();
+	return { playerOneName, playerTwoName };
+});
+
+const resetBtn = document.querySelector("#reset-game");
+resetBtn.addEventListener("click", () => {
+	Gameboard.resetGameboard();
+});
